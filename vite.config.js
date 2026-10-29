@@ -1,9 +1,9 @@
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
-import { defineConfig, loadEnv } from 'vite'
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
+import { defineConfig, loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [
@@ -15,34 +15,30 @@ export default defineConfig(({ mode }) => {
 
     server: {
       host: true,
-      allowedHosts: ['mycaddy.local'],
+      allowedHosts: ["mycaddy.local"],
 
       proxy: {
-        '/api': {
-          target: 'http://api.favorit-parts.ru',
+        "/api": {
+          target: "http://api.favorit-parts.ru",
           changeOrigin: true,
-          rewrite: (path) =>
-            path.replace(/^\/api\/?/, '/hs/hsprice/'),
+          rewrite: (path) => path.replace(/^\/api\/?/, "/hs/hsprice/"),
           configure: (proxy) => {
-            proxy.on('proxyReq', (proxyReq) => {
-              const apiKey = env.FAVORIT_API_KEY
+            proxy.on("proxyReq", (proxyReq) => {
+              const apiKey = env.FAVORIT_API_KEY;
 
               if (!apiKey) {
-                return
+                return;
               }
 
-              const url = new URL(
-                proxyReq.path,
-                'http://api.favorit-parts.ru',
-              )
+              const url = new URL(proxyReq.path, "http://api.favorit-parts.ru");
 
-              url.searchParams.set('key', apiKey)
+              url.searchParams.set("key", apiKey);
 
-              proxyReq.path = `${url.pathname}${url.search}`
-            })
-          }
-        }
-      }
-    }
-  }
-})
+              proxyReq.path = `${url.pathname}${url.search}`;
+            });
+          },
+        },
+      },
+    },
+  };
+});
