@@ -5,7 +5,6 @@ import {useGetGoodsByParamsQuery} from './services/goods'
 export const Search = () => {
     const [inputValue, setInputValue] = useState('')
     const debouncedNumber = useDebounce(inputValue, 500);
-    console.log('debouncedNumber', debouncedNumber);
     
     const { isFetching } = useGetGoodsByParamsQuery(
         { number: debouncedNumber },

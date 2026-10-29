@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    environment:
+      FAVORIT_API_KEY: ${FAVORIT_API_KEY}
+    volumes:
+      - ./src:/app/src
+      - ./index.html:/app/index.html
+      - ./vite.config.js:/app/vite.config.js
+      - ./public:/app/public
+    expose:
+      - "5173"
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./certs:/certs
+      - caddy_data:/data
+      - caddy_config:/config
+    command: >
+      sh -c "(while true; do
+                cp -f /data/caddy/pki/authorities/local/root.crt /certs/root.crt 2>/dev/null || true;
+                sleep 5;
+              done) &
+              exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"
+    depends_on:
+      - app
+
+volumes:
+  caddy_data:
+  caddy_config:
