@@ -1,8 +1,7 @@
-import './App.css'
-import { Search } from './app/Search'
+import "./App.css";
+import { Search } from "./app/Search";
 
 function App() {
-
   return (
     <>
       <section id="center">
@@ -11,7 +10,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

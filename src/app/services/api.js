@@ -1,19 +1,18 @@
-import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
-
+import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: '/api',
-    paramsSerializer: (params) => {
-        return Object.entries(params)
-            .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-            .join('&');
-    }
-})
+  baseUrl: "/api",
+  paramsSerializer: (params) => {
+    return Object.entries(params)
+      .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+      .join("&");
+  },
+});
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 3 })
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 3 });
 
 export const api = createApi({
-    reducerPath: 'splitApi',
-    baseQuery: baseQueryWithRetry,
-    endpoints: () => ({})
-})
+  reducerPath: "splitApi",
+  baseQuery: baseQueryWithRetry,
+  endpoints: () => ({}),
+});
