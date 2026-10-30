@@ -1,11 +1,11 @@
 import "./App.css";
-import { Search } from "./app/components/goods/Search";
+import { GoodsSearch } from "./app/components/goods/GoodsSearch";
 
 function App() {
   return (
     <>
       <section id="center">
-        <Search />
+        <GoodsSearch />
       </section>
       <div className="ticks"></div>
       <section id="spacer"></section>

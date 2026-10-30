@@ -1,0 +1,46 @@
+import { useSelector } from "react-redux";
+import { currentBrandSelector } from "../../services/goodsFilterSlice";
+import { useGetGoodsByParamsQuery } from "../../services/goodsApi";
+import { currentNumberSelector } from "../../services/goodsSearchSlice";
+import { GoodsItem } from "./GoodsItem";
+
+export const GoodsList = () => {
+  const brand = useSelector(currentBrandSelector);
+  const currentNumber = useSelector(currentNumberSelector);
+  const { currentData, isError, isFetching, isSuccess } =
+    useGetGoodsByParamsQuery(
+      { number: currentNumber, brand },
+      { skip: !(brand && brand.length) },
+    );
+
+  if (isFetching)
+    return <p className="text-sm text-gray-500">Загрузка списка...</p>;
+  if (isError)
+    return (
+      <p className="text-sm text-red-500">Произошла ошибка, повторите снова</p>
+    );
+  if (!isSuccess || !brand) {
+    return null;
+  }
+  if (currentData?.goods.length === 0 || !currentData)
+    return <p className="text-sm text-gray-500">Предложений не найдено</p>;
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs tracking-wide text-gray-500 uppercase">
+            <th className="px-4 py-2.5">Название / Производитель</th>
+            <th className="px-4 py-2.5 text-right">Цена</th>
+            <th className="px-4 py-2.5 text-right">Остаток</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {currentData?.goods.map((item) => (
+            <GoodsItem key={item.goodsID} item={item} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
