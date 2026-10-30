@@ -4,6 +4,7 @@ import { goodsApi } from "./goodsApi";
 const initialState = {
   selectedBrand: "",
   lastGoodsNumber: "",
+  analogues: false,
 };
 
 const goodsFilterSlice = createSlice({
@@ -12,6 +13,9 @@ const goodsFilterSlice = createSlice({
   reducers: {
     setCurrentBrand: (state, action) => {
       state.selectedBrand = action.payload;
+    },
+    setAnalogues: (state, action) => {
+      state.analogues = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -29,6 +33,7 @@ const goodsFilterSlice = createSlice({
   },
 });
 
-export const { setCurrentBrand } = goodsFilterSlice.actions;
+export const { setCurrentBrand, setAnalogues } = goodsFilterSlice.actions;
 export const currentBrandSelector = (state) => state.goodsFilter.selectedBrand;
+export const analoguesSelector = (state) => state.goodsFilter.analogues;
 export default goodsFilterSlice.reducer;

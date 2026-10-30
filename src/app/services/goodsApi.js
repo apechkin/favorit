@@ -11,6 +11,10 @@ export const goodsApi = api.injectEndpoints({
           ...(arg?.info ? { info: "on" } : {}),
         },
       }),
+      transformResponse: (response) => ({
+        ...response,
+        goods: (response.goods ?? []).filter((item) => item.brand !== ""),
+      }),
     }),
   }),
 });

@@ -1,15 +1,19 @@
 import { useSelector } from "react-redux";
-import { currentBrandSelector } from "../../services/goodsFilterSlice";
+import {
+  currentBrandSelector,
+  analoguesSelector,
+} from "../../services/goodsFilterSlice";
 import { useGetGoodsByParamsQuery } from "../../services/goodsApi";
 import { currentNumberSelector } from "../../services/goodsSearchSlice";
 import { GoodsItem } from "./GoodsItem";
 
 export const GoodsList = () => {
   const brand = useSelector(currentBrandSelector);
+  const analogues = useSelector(analoguesSelector);
   const currentNumber = useSelector(currentNumberSelector);
   const { currentData, isError, isFetching, isSuccess } =
     useGetGoodsByParamsQuery(
-      { number: currentNumber, brand },
+      { number: currentNumber, brand, analogues },
       { skip: !(brand && brand.length) },
     );
 
