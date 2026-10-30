@@ -8,6 +8,7 @@ import {
 import { GoodsAnalogues } from "./GoodsAnalogues";
 import { currentNumberSelector } from "../../services/goodsSearchSlice";
 import { useDebounce } from "../../hooks/useDebounce";
+import { Spinner } from "../ui/Spinner";
 
 export const GoodsBrand = ({ placeholder = "Выберите…" }) => {
   const inputValue = useSelector(currentNumberSelector);
@@ -80,8 +81,14 @@ export const GoodsBrand = ({ placeholder = "Выберите…" }) => {
     }
   }
 
-  if (isFetching)
-    return <p className="text-sm text-gray-500">Загрузка брендов...</p>;
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-start gap-2 text-sm text-gray-500">
+        <Spinner size="sm" />
+        <span>Загрузка брендов...</span>
+      </div>
+    );
+  }
   if (isError)
     return (
       <p className="text-sm text-red-500">Произошла ошибка, повторите снова</p>

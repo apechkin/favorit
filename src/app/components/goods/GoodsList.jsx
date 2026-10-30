@@ -7,6 +7,7 @@ import { useGetGoodsByParamsQuery } from "../../services/goodsApi";
 import { currentNumberSelector } from "../../services/goodsSearchSlice";
 import { GoodsItem } from "./GoodsItem";
 import { Fragment } from "react";
+import { Spinner } from "../ui/Spinner";
 
 export const GoodsList = () => {
   const brand = useSelector(currentBrandSelector);
@@ -20,8 +21,15 @@ export const GoodsList = () => {
   const { currentData, isError, isFetching, isSuccess } =
     useGetGoodsByParamsQuery({ ...params }, { skip: !(brand && brand.length) });
 
-  if (isFetching)
-    return <p className="text-sm text-gray-500">Загрузка списка...</p>;
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-start gap-2 text-sm text-gray-500">
+        <Spinner size="sm" />
+        <span>Загрузка списка...</span>
+      </div>
+    );
+  }
+
   if (isError)
     return (
       <p className="text-sm text-red-500">Произошла ошибка, повторите снова</p>
