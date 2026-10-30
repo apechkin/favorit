@@ -9,8 +9,12 @@ export const GoodsSearchInput = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div class="w-full max-w-sm min-w-50">
+      <label htmlFor="number" class="block mb-2 text-sm text-gray-500">
+        Номер детали:
+      </label>
       <input
+        id="number"
         type="text"
         value={inputValue}
         onChange={(e) => dispatch(setInputValue(e.target.value))}
