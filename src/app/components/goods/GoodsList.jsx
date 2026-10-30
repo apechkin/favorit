@@ -11,11 +11,13 @@ export const GoodsList = () => {
   const brand = useSelector(currentBrandSelector);
   const analogues = useSelector(analoguesSelector);
   const currentNumber = useSelector(currentNumberSelector);
+  let params = {
+    number: currentNumber,
+    brand,
+  };
+  if (analogues) params.analogues = analogues;
   const { currentData, isError, isFetching, isSuccess } =
-    useGetGoodsByParamsQuery(
-      { number: currentNumber, brand, analogues },
-      { skip: !(brand && brand.length) },
-    );
+    useGetGoodsByParamsQuery({ ...params }, { skip: !(brand && brand.length) });
 
   if (isFetching)
     return <p className="text-sm text-gray-500">Загрузка списка...</p>;

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentBrand,
   currentBrandSelector,
-  analoguesSelector,
 } from "../../services/goodsFilterSlice";
 import { GoodsAnalogues } from "./GoodsAnalogues";
 import { currentNumberSelector } from "../../services/goodsSearchSlice";
@@ -20,11 +19,9 @@ export const GoodsBrand = ({ placeholder = "Выберите…" }) => {
   const [highlighted, setHighlighted] = useState(0);
   const rootRef = useRef(null);
 
-  const analogues = useSelector(analoguesSelector);
-
   const { currentData, isFetching, isError, isSuccess } =
     useGetGoodsByParamsQuery(
-      { number: debouncedNumber, analogues },
+      { number: debouncedNumber },
       { skip: debouncedNumber.length < 1 },
     );
 
